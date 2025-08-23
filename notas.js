@@ -22,7 +22,7 @@ async function LeeryConvertir(){
 
 async function ConvertirYGuardar(arrayNota){
     try{
-        const notajson = JSON.stringify(arrayNota);
+        const notajson = JSON.stringify(arrayNota, null, 2);
         await fs.writeFile('notas.json', notajson, 'utf-8');
     } catch(error){
         console.log("error al guardar: " + error);

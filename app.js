@@ -43,6 +43,8 @@ async function main(){
                 salir = true;
                 break;
         }
-        rl.close(); //Detiene la escucha del teclado y permite que la app termine correctamente
     }
+    rl.close(); //Detiene la escucha del teclado y permite que la app termine correctamente
 }
+
+main(); //ejecutar main, que a su vez ejecuta todo lo demás. MUCHO MUY IMPORTANTE.
