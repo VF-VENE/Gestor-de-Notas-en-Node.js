@@ -31,8 +31,9 @@ async function main(){
     while(!salir){
         console.log(chalk.blueBright("\n--- Gestor de notas ---"));
         console.log("1. Agregar nota");
-        console.log("2. Eliminar una nota")
-        console.log("3. salir");
+        console.log("2. Eliminar una nota");
+        console.log("3. Listar notas");
+        console.log("4. salir");
 
         let opcion = await preguntar(chalk.yellow("ingresa un numero para seleccionar la opcion\n"))
 
@@ -49,6 +50,20 @@ async function main(){
                 break;
             }
             case "3":{
+                const notas = await LeeryConvertir();
+                if(notas.length === 0){
+                    console.log(chalk.red("no hay notas para mostrar"));
+                } else {
+                    console.log(chalk.blueBright("\n--- Listado de notas ---"));
+                    notas.forEach((nota, index) => {
+                        console.log(chalk.green(`\nNota ${index + 1}:`));
+                        console.log(chalk.yellow(`Titulo: ${nota.titulo}`));
+                        console.log(`Contenido: ${nota.contenido}`);
+                    });
+                }
+                break;
+            }
+            case "4":{
                 salir = true;
                 break;
             }
