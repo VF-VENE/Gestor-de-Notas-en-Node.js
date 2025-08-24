@@ -31,12 +31,12 @@ async function main(){
         console.log("1. Agregar nota");
         console.log("2. salir");
 
-        let opcion = await preguntar("ingresa un numero para seleccionar la opcion")
+        let opcion = await preguntar("ingresa un numero para seleccionar la opcion\n")
 
         switch(opcion){
             case "1":
-                const titulo = await preguntar("ingrese el titulo de la nota");
-                const contenido = await preguntar("ingrese el contenido de " + titulo);
+                const titulo = await preguntar("ingrese el titulo de la nota\n");
+                const contenido = await preguntar("ingrese el contenido de " + titulo + "\n");
                 await AgregarNota(titulo, contenido);
                 break;
             case "2":
