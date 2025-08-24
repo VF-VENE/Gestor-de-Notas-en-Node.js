@@ -8,7 +8,7 @@ Consigna:
 
 //desestructuracion de objetos
 const { Resolver } = require('dns');
-const {AgregarNota, LeeryConvertir} = require('./notas.js');
+const {AgregarNota, LeeryConvertir, EliminarNota} = require('./notas.js');
 const readline = require("readline");
 
 const rl = readline.createInterface({ //crear interfaz: forma que Node tiene de interactuar con la consola.
@@ -29,19 +29,27 @@ async function main(){
     while(!salir){
         console.log("\n--- Gestor de notas ---");
         console.log("1. Agregar nota");
-        console.log("2. salir");
+        console.log("2. Eliminar una nota")
+        console.log("3. salir");
 
         let opcion = await preguntar("ingresa un numero para seleccionar la opcion\n")
 
         switch(opcion){
-            case "1":
+            case "1": {
                 const titulo = await preguntar("ingrese el titulo de la nota\n");
                 const contenido = await preguntar("ingrese el contenido de " + titulo + "\n");
                 await AgregarNota(titulo, contenido);
                 break;
-            case "2":
+            }
+            case "2":{
+                const tituloEliminar = await preguntar("ingrese el titulo de la nota que se desea eliminar\n");
+                await EliminarNota(tituloEliminar);
+                break;
+            }
+            case "3":{
                 salir = true;
                 break;
+            }
         }
     }
     rl.close(); //Detiene la escucha del teclado y permite que la app termine correctamente

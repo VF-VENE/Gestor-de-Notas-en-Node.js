@@ -1,6 +1,6 @@
 const { error } = require('console');
 const fs = require('fs').promises;
-module.exports = {AgregarNota, LeeryConvertir};
+module.exports = {AgregarNota, LeeryConvertir, EliminarNota};
 
 /*
 flujo de pensamiento para cada funcionalidad que interactúe con notas.json
@@ -35,4 +35,18 @@ async function AgregarNota(titulo, contenido){
     notas.push(nuevaNota) //ahora el array notas toma un nuevo valor
     await ConvertirYGuardar(notas);
     console.log("nota guardada correctamente");
+}
+
+async function EliminarNota(titulo){
+    const notas = await LeeryConvertir();
+    //filter mantiene solo los elementos donde la condición da true.
+    const notasEliminada = notas.filter(notas => notas.titulo !== titulo);
+    //Si el largo de las listas es igual, significa que ninguna nota fue eliminada.
+    if(notas.length == notasEliminada.length){
+        console.log("no se encontro la nota, vuelvalo a intentar");
+    }
+    else{
+        await ConvertirYGuardar(notasEliminada);
+        console.log(titulo + " fue eliminada");
+    }
 }
