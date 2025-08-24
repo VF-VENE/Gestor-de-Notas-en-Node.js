@@ -1,6 +1,6 @@
-const { error } = require('console');
-const fs = require('fs').promises;
-module.exports = {AgregarNota, LeeryConvertir, EliminarNota};
+import { error } from 'console';
+import { promises as fs } from 'fs';
+import chalk from "chalk";
 
 /*
 flujo de pensamiento para cada funcionalidad que interactúe con notas.json
@@ -10,43 +10,42 @@ flujo de pensamiento para cada funcionalidad que interactúe con notas.json
 4. convertir y Guardar array actualizado en notas.json
 */
 
-async function LeeryConvertir(){
-    try{
+async function LeeryConvertir() {
+    try {
         const datajson = await fs.readFile('notas.json', 'utf-8');
         return JSON.parse(datajson);
-    } catch(error){
-        console.error("Error leyendo o parseando notas.json:", error);
+    } catch(error) {
+        console.error(chalk.red("Error leyendo o parseando notas.json:", error));
         return [];
     }
 }
 
-async function ConvertirYGuardar(arrayNota){
-    try{
+async function ConvertirYGuardar(arrayNota) {
+    try {
         const notajson = JSON.stringify(arrayNota, null, 2);
         await fs.writeFile('notas.json', notajson, 'utf-8');
-    } catch(error){
-        console.log("error al guardar: " + error);
+    } catch(error) {
+        console.log(chalk.red("error al guardar: " + error));
     }
 }
 
-async function AgregarNota(titulo, contenido){
+async function AgregarNota(titulo, contenido) {
     const notas = await LeeryConvertir();
-    const nuevaNota = {titulo, contenido}; //shorthand. es lo mismo que tiulo: titulo.
-    notas.push(nuevaNota) //ahora el array notas toma un nuevo valor
+    const nuevaNota = { titulo, contenido };
+    notas.push(nuevaNota);
     await ConvertirYGuardar(notas);
-    console.log("nota guardada correctamente");
+    console.log(chalk.green("nota guardada correctamente"));
 }
 
-async function EliminarNota(titulo){
+async function EliminarNota(titulo) {
     const notas = await LeeryConvertir();
-    //filter mantiene solo los elementos donde la condición da true.
-    const notasEliminada = notas.filter(notas => notas.titulo !== titulo);
-    //Si el largo de las listas es igual, significa que ninguna nota fue eliminada.
-    if(notas.length == notasEliminada.length){
-        console.log("no se encontro la nota, vuelvalo a intentar");
-    }
-    else{
+    const notasEliminada = notas.filter(nota => nota.titulo !== titulo);
+    if(notas.length === notasEliminada.length) {
+        console.log(chalk.red("no se encontro la nota, vuelva a intentar"));
+    } else {
         await ConvertirYGuardar(notasEliminada);
-        console.log(titulo + " fue eliminada");
+        console.log(chalk.green(titulo + " fue eliminada"));
     }
 }
+
+export { AgregarNota, LeeryConvertir, EliminarNota };

@@ -7,9 +7,11 @@ Consigna:
 */
 
 //desestructuracion de objetos
-const { Resolver } = require('dns');
-const {AgregarNota, LeeryConvertir, EliminarNota} = require('./notas.js');
-const readline = require("readline");
+import dns from 'dns';
+const { Resolver } = dns;
+import { AgregarNota, LeeryConvertir, EliminarNota } from './notas.js';
+import readline from "readline";
+import chalk from "chalk";
 
 const rl = readline.createInterface({ //crear interfaz: forma que Node tiene de interactuar con la consola.
     input: process.stdin,
@@ -27,12 +29,12 @@ async function main(){
     let salir = false;
 
     while(!salir){
-        console.log("\n--- Gestor de notas ---");
+        console.log(chalk.blueBright("\n--- Gestor de notas ---"));
         console.log("1. Agregar nota");
         console.log("2. Eliminar una nota")
         console.log("3. salir");
 
-        let opcion = await preguntar("ingresa un numero para seleccionar la opcion\n")
+        let opcion = await preguntar(chalk.yellow("ingresa un numero para seleccionar la opcion\n"))
 
         switch(opcion){
             case "1": {
